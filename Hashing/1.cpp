@@ -42,28 +42,49 @@ Method 2 (Use Sorting and Binary Search):
 
 
 
+Method 3 
 
+Efficient Approach: Create a map to store the frequency of each distinct number present in A[]. 
+Then we will check if each number of B[] is present in map or not. If present in the map, we will 
+decrement the frequency value for that number by one and check for the next number. If map value for 
+any number becomes zero, we will erase it from the map. If any number of B[] is not found in the map, 
+we will set the flag value and break the loops and print No. Otherwise, we will print Yes.
+
+
+// Function to check if an array is 
+// subset of another array 
   
-/* Fucntion prototypes */
-void quickSort(int *arr, int si, int ei); 
-int binarySearch(int arr[], int low,  
-                    int high, int x); 
-  
-/* Return 1 if arr2[] is a subset of arr1[] */
-bool isSubset(int arr1[], int arr2[], 
-                        int m, int n) 
+int isSubset(int a[], int b[], int m, int n) 
 { 
-    int i = 0; 
   
-    quickSort(arr1, 0, m-1); 
-    for (i=0; i<n; i++) 
-    { 
-        if (binarySearch(arr1, 0, m - 1, 
-                        arr2[i]) == -1) 
-        return 0; 
+    // map to store the values of array a[] 
+    map<int, int> mp1; 
+  
+    for (int i = 0; i < m; i++) 
+        mp1[a[i]]++; 
+  
+    // flag value 
+    int f = 0; 
+  
+    for (int i = 0; i < n; i++) { 
+        // if b[i] is not present in map 
+        // then array b[] can not be a 
+        // subset of array a[] 
+  
+        if (mp1.find(b[i]) == mp1.end()) { 
+            f = 1; 
+            break; 
+        } 
+  
+        // if if b[i] is present in map 
+        // decrement by one 
+        else { 
+            mp1[b[i]]--; 
+  
+            if (mp1[b[i]] == 0) 
+                mp1.erase(mp1.find(b[i])); 
+        } 
     } 
-      
-    /* If we reach here then all elements 
-     of arr2[] are present in arr1[] */
-    return 1; 
+  
+    return f; 
 } 
