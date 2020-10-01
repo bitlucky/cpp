@@ -8,4 +8,4 @@ bool isEven(int n)
 {  
     // n&1 is 1, then odd, else even  
     return (!(n & 1));  
-}  
+}     
